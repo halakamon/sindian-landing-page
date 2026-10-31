@@ -1,18 +1,30 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import { useColorScheme } from 'react-native';
+import { Stack } from "expo-router";
+import { StatusBar } from "react-native";
+import { useFonts } from "expo-font";
 
-import { AnimatedSplashOverlay } from '@/components/animated-icon';
-import AppTabs from '@/components/app-tabs';
+import {
+  Cairo_400Regular,
+  Cairo_500Medium,
+  Cairo_600SemiBold,
+  Cairo_700Bold,
+} from "@expo-google-fonts/cairo";
 
-SplashScreen.preventAutoHideAsync();
+export default function RootLayout() {
+  const [fontsLoaded] = useFonts({
+    CairoRegular: Cairo_400Regular,
+    CairoMedium: Cairo_500Medium,
+    CairoSemiBold: Cairo_600SemiBold,
+    CairoBold: Cairo_700Bold,
+  });
 
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
+  if (!fontsLoaded) {
+    return null;
+  }
+
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <AnimatedSplashOverlay />
-      <AppTabs />
-    </ThemeProvider>
+    <>
+      <StatusBar barStyle="light-content" />
+      <Stack screenOptions={{ headerShown: false }} />
+    </>
   );
 }
